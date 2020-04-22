@@ -1,0 +1,9 @@
+.homeText{
+    font-size: 35px;
+    color: royalblue;
+    text-align: center;
+    position: relative;
+    top: 30px;
+    text-shadow: 2px 2px 2px gray;
+
+}
