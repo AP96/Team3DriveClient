@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table=striped">
+                <thead>
+                    <tr>
+                        <th>FileName</th>
+                        <th>FileType</th>
+                        <th>Size</th>
+                        <th>Time</th>
+                        <th>Upload</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let file of allfiles">
+                        <td>{{ file.fileName }}</td>
+                        <td>{{ file.fileType }}</td> 
+                        <td>{{  file.size   }}</td>
+                        <td>{{  file.fileTime | date: 'dd/MM/yyyy'  }}</td>
+                        <td><button type="button" id="details" class="btn btn-default">Details</button></td>
+                        <td><button type="button" id="Upload" class="btn btn-success">Upload</button></td>
+                        <td><button type="button" id="download" class="btn btn-danger">Download</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

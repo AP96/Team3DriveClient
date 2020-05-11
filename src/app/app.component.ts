@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+// ng serve --aot
 export class AppComponent {
   title = 'Team3DriveClient';
 }

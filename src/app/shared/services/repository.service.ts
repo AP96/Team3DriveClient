@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpRequest } from '@angular/common/http';
 import { EnvironmentUrlService } from './environment-url.service';
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { DBFile } from 'src/app/interfaces/DBFile.model';
 /**
  * RepositoryServicee prepared to be used by components for CRUD Data operation results on the browser.
  */
-@Injectable()
+@Injectable ()
 export class RepositoryService {
+    private filesURL: string;
+
 
   /**
    * 
@@ -14,7 +20,9 @@ export class RepositoryService {
    * Angular HttpClient and the environment variable into the constructor. 
    * @param environmentUrl 
    */
-  constructor(private http: HttpClient, private environmentUrl: EnvironmentUrlService) { }
+  constructor(private http: HttpClient, private environmentUrl: EnvironmentUrlService) {
+    this.filesURL = "http://localhost:8080/api/files";
+   }
 
   /* Functions to wrap requests */
   /**
@@ -22,9 +30,17 @@ export class RepositoryService {
    * A wrapper for all GET Requests. It accepts the route parameter of type string (/api/upload)
    * and combines it with the environment variable
    */
-  public getData(route: string) {
-    return this.http.get(this.createCompleteRoute(route, this.environmentUrl.urlAddress));
+  getFilesList(): Observable<DBFile[]> {
+    //return this.http.get(this.createCompleteRoute(route, this.environmentUrl.urlAddress));
+    return this.http.get<DBFile[]>(this.filesURL);
+  
   }
+
+  private handleError(error: Response) {
+    return Observable.throw(error);
+  }
+ 
+ 
 
   /**
    * @param route
@@ -34,6 +50,7 @@ export class RepositoryService {
    * Here we are using the Content-Type inside the header, but if we need additional values inside the header,
    * we could just add nother key-value pair inside the HttpHeaders object.
    */
+  
   public create(route: string, body) {
     return this.http.post(this.createCompleteRoute(route, this.environmentUrl.urlAddress), body, this.generateHeaders());
   }
@@ -56,4 +73,5 @@ export class RepositoryService {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
   }
+   
 }
